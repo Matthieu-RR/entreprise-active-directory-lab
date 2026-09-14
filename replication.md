@@ -16,6 +16,7 @@ Une deuxième machine virtuelle Windows Server 2022 a été installée, avec une
 ### 2. Vérification de la réplication
 
 Une fois la promotion terminée, la console Utilisateurs et ordinateurs Active Directory a été ouverte sur ce deuxième serveur. Les unités d'organisation Comptabilité et Direction, ainsi que les utilisateurs Marc Henry et Jean Brow, y apparaissaient automatiquement, sans aucune recréation manuelle. Cette synchronisation confirme que la réplication Active Directory entre les deux contrôleurs de domaine fonctionne correctement.
+ ![Structure AD répliquée sur le second serveur](replication-ad-second-serveur.png)
 
 ### 3. Test de tolérance de panne
 
@@ -25,6 +26,8 @@ L'analyse a montré que le poste client n'avait comme DNS que l'adresse du premi
 
 Un nouveau test de connexion, cette fois avec le compte de Jean Brow, a confirmé le bon fonctionnement de la bascule : le gpresult /r a affiché "Stratégie de groupe appliquée depuis : WIN-BN5K50VTBT7.entreprise.local", soit le nom du deuxième serveur, alors que le premier restait éteint.
 
+ ![Bascule réussie vers le second contrôleur](bascule-second-controleur-domaine.png)
+ 
 ### Difficulté rencontrée
 
 La réplication entre les deux contrôleurs de domaine fonctionnait dès le départ, mais le poste client restait dépendant d'un seul serveur DNS. Ce point a permis de bien comprendre une limite pratique de la redondance Active Directory : la présence d'un deuxième contrôleur de domaine ne suffit pas à elle seule, il faut aussi que chaque poste client soit configuré avec un DNS secondaire pour pouvoir réellement basculer dessus en cas de panne du premier.
