@@ -20,14 +20,14 @@ Le serveur a été installé sur une machine virtuelle avec une adresse IP fixe 
 ### 2. Vérification du DNS
 
 La promotion en contrôleur de domaine installe et configure automatiquement le rôle DNS, condition indispensable au bon fonctionnement d'Active Directory. La zone de recherche directe entreprise.local a été vérifiée : elle contient les enregistrements Hôte (A) du serveur, ainsi que les enregistrements techniques (SOA, NS, _msdcs, _sites, _tcp, _udp) générés automatiquement pour la localisation des services du domaine.
-![Zones DNS entreprise.local](1.png)
-![Enregistrements de la zone entreprise.local](2.png)
+![Zones DNS entreprise.local](screenshots/1.png)
+![Enregistrements de la zone entreprise.local](screenshots/2.png)
 
 ### 3. Structure organisationnelle
 
 Deux unités d'organisation ont été créées : Comptabilité et Direction. Un utilisateur a été ajouté dans chacune (Marc Henry dans Comptabilité, Jean Brow dans Direction). Cette séparation permet d'appliquer des règles différenciées selon le service, plutôt qu'une politique unique pour toute l'entreprise.
-![OU Comptabilite avec Marc Henry](3.png)
-![OU Direction avec Jean Brow](4.png)
+![OU Comptabilite avec Marc Henry](screenshots/3.png)
+![OU Direction avec Jean Brow](screenshots/4.png)
 
 ### 4. Stratégie de groupe (GPO)
 
@@ -39,7 +39,7 @@ Un poste Windows 10 a été joint au domaine, avec son DNS pointé manuellement 
 
 
 Aucun objet n'a été refusé, ce qui confirme une application propre de la stratégie.
-![Résultat gpresult montrant les deux GPO appliquées](5.png)
+![Résultat gpresult montrant les deux GPO appliquées](screenshots/5.png)
 
 ### 6. Deuxième GPO : restriction du Panneau de configuration
 
@@ -48,9 +48,9 @@ Pour vérifier que les règles s'appliquent bien de façon ciblée par OU, et no
 Le test a été effectué sur les deux comptes utilisateurs :
 
 - **Marc Henry (OU Comptabilité)** : tentative d'ouverture du Panneau de configuration bloquée, avec le message "Cette opération a été annulée en raison de restrictions sur cet ordinateur. Contactez votre administrateur système."
-![Restriction bloquée pour Marc Henry](6.png)
+![Restriction bloquée pour Marc Henry](screenshots/6.png)
 - **Jean Brow (OU Direction)** : accès normal au Panneau de configuration, sans aucune restriction.
-![Panneau de configuration accessible pour Jean Brow](7.png)
+![Panneau de configuration accessible pour Jean Brow](screenshots/7.png)
 Ce résultat confirme que la stratégie de groupe s'applique bien uniquement à l'OU ciblée, sans affecter les autres unités organisationnelles du domaine — c'est précisément l'intérêt de structurer un domaine en OU plutôt que d'appliquer une politique unique à tous les utilisateurs.
 
 ## Difficulté rencontrée
