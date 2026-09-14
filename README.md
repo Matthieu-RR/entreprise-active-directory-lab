@@ -66,3 +66,7 @@ Une infrastructure Active Directory fonctionnelle de bout en bout : domaine, DNS
 Ajouter un deuxième contrôleur de domaine pour observer la réplication Active Directory, ou introduire une première brique cloud (par exemple une VM Azure) pour amorcer un scénario d'infrastructure hybride.
 
 ## Extension du projet : réplication et tolérance de panne suivie de Voir la documentation complète et un lien markdown vers le nouveau fichier : [replication.md](replication.md)
+
+## Extension du projet : interconnexion réseau (VLAN, routage)
+
+Voir la documentation complète : [interconnexion-reseau.md](interconnexion-reseau.md)
