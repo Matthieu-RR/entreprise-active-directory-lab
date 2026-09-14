@@ -8,8 +8,10 @@ Cisco Packet Tracer
 2 routeurs (Cisco 1941)
 3 switches (Cisco 2960)
 6 PC répartis sur trois VLAN
-Liaison série entre les deux routeurs (simulation d'un lien WAN inter-sites)
-Topologie
+## Liaison série entre les deux routeurs (simulation d'un lien WAN inter-sites)
+## Topologie
+
+![Topologie complète : VLAN, deux sites, routage](premiere-configuration.png)
 
 ### Site 1
 
@@ -37,6 +39,8 @@ Sur Router0, deux sous-interfaces ont été créées sur l'interface reliée au 
 
 Un test ping entre deux PC de VLAN différents a confirmé le bon fonctionnement du routage : le TTL de la réponse passait de 128 à 127, preuve que le paquet avait traversé le routeur, contrairement à un ping entre deux PC du même VLAN qui conservait un TTL de 128.
 
+![Test ping entre VLAN, TTL confirmant le passage par le routeur](test-ping-inter-vlan.png)
+
 ### 4. Ajout d'un deuxième site et routage statique
 
 Un deuxième routeur (Router1) a été ajouté, relié à Router0 par une liaison série représentant un lien WAN entre deux sites. Ce lien a été adressé en /30 (192.168.1.0/30, avec 2 seules adresses utilisables pour les deux extrémités), un choix économique en adresses IP pour un lien point-à-point.
@@ -45,9 +49,13 @@ Un troisième réseau (VLAN 30, 192.168.30.0/24) a été créé derrière Router
 
 Sur Router0 : route vers 192.168.30.0/24 via Router1
 Sur Router1 : routes vers 192.168.10.0/24 et 192.168.20.0/24 via Router0
+
+![Topologie avec le deuxième site et la liaison série](Configuration_routage_statique.png)
+
 ### 5. Test de connectivité inter-sites
 
 Un ping depuis un PC du site 2 (VLAN 30) vers des PC du site 1 (VLAN 10 et VLAN 20) a réussi dans les deux cas, avec un TTL de 126 — confirmant que le paquet avait traversé deux routeurs successifs (Router1 puis Router0), conformément à la topologie mise en place.
+![Ping réussi entre les deux sites en routage statique, TTL=126](test-ping-inter-sites-routage-statique.png)
 
 ### 6. Remplacement du routage statique par OSPF
 
@@ -57,7 +65,12 @@ La commande show ip route sur Router0 a confirmé que le réseau du site 2 avait
 
 O    192.168.30.0/24 [110/65] via 10.0.0.2, 00:00:55, Serial0/0/0
 
+![Table de routage avec la route apprise via OSPF](ospf-routes-apprises.png)
+
 Un nouveau test de ping entre les deux sites a donné un résultat identique au test précédent (TTL=126 dans les deux sens), confirmant que le résultat pour l'utilisateur final reste le même, tandis que la façon dont les routeurs apprennent les chemins change radicalement : automatique avec OSPF, contre configuration manuelle et bidirectionnelle avec le routage statique.
+
+
+![Ping réussi entre les deux sites via OSPF, TTL=126](test-ping-ospf.png)
 
 ### Difficulté rencontrée
 
